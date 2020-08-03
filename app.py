@@ -10,7 +10,7 @@ from auth import AuthError, requires_auth
 def create_app(test_config=None):
   app = Flask(__name__)
   setup_db(app)
-  CORS(app)
+  # CORS(app, resources={r"/api/*": {"origins": "*"}})
 
   return app
 
@@ -31,22 +31,21 @@ def home():
 @app.route('/actors', methods=['GET'])
 @requires_auth('get:actors')
 def get_actors(token):
-    return 'hello'
-  # try:
-  #   actors = Actor.query.order_by('id').all()
-  #
-  #   if len(actors) == 0:
-  #     abort(404)
-  #
-  #   formatted_actors = [actor.format() for actor in actors]
-  #   return jsonify({
-  #       'success': True,
-  #       'total_actors': len(actors),
-  #       'actors': formatted_actors
-  #   }), 200
+  try:
+    actors = Actor.query.order_by('id').all()
 
-  # except AuthError:
-  #   abort(422)
+    if len(actors) == 0:
+      abort(404)
+
+    formatted_actors = [actor.format() for actor in actors]
+    return jsonify({
+        'success': True,
+        'total_actors': len(actors),
+        'actors': formatted_actors
+    }), 200
+
+  except AuthError:
+    abort(422)
 
 
 @app.route("/actors", methods=['POST'])

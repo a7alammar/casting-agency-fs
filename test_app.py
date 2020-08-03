@@ -1,8 +1,7 @@
 import datetime
-import os
 import unittest
 import json
-from app import app
+import app
 from models import setup_db, Movie, Actor
 
 class CastingAgencyTestCase(unittest.TestCase):
