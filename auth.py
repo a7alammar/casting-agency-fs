@@ -1,6 +1,4 @@
 import json
-import os
-
 from flask import request
 from functools import wraps
 from jose import jwt

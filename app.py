@@ -1,23 +1,19 @@
-import datetime
-import os
 from flask import Flask, request, abort, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-
-from models import setup_db, Movie, Actor, db
+from models import setup_db, Movie, Actor
 from auth import AuthError, requires_auth
 
 def create_app(test_config=None):
   app = Flask(__name__)
   setup_db(app)
-  # CORS(app, resources={r"/api/*": {"origins": "*"}})
+  CORS(app)
 
   return app
 
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run()
 
 
 '''
