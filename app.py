@@ -179,7 +179,7 @@ def add_movie(payload):
 
 
 
-@app.route('/movies/<id>', methods=['PATCH'])
+@app.route('/movies/<int:id>', methods=['PATCH'])
 @requires_auth('patch:movie')
 def update_movie(payload, id):
   body = request.get_json()
