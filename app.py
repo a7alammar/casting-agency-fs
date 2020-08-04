@@ -75,9 +75,9 @@ def add_actor(payload):
 
 @app.route('/actors/<id>', methods=['PATCH'])
 @requires_auth('patch:actor')
-def update_actor(payload, actor_id):
+def update_actor(payload, id):
     body = request.get_json()
-    actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+    actor = Actor.query.filter(Actor.id == id).one_or_none()
 
     if body == None :
         abort(404)
@@ -107,10 +107,10 @@ def update_actor(payload, actor_id):
 
 
 
-@app.route("/actors/<int:actor_id>", methods=['DELETE'])
+@app.route("/actors/<int:id>", methods=['DELETE'])
 @requires_auth('delete:actors')
-def delete_actor(payload, actor_id):
-    actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+def delete_actor(payload, id):
+    actor = Actor.query.filter(Actor.id == id).one_or_none()
     if actor == None:
         abort(404)
 
@@ -118,7 +118,7 @@ def delete_actor(payload, actor_id):
         actor.delete()
         return jsonify({
             'success': True,
-            'deleted': actor_id
+            'deleted': id
         })
     except AuthError:
         abort(422)
@@ -181,9 +181,9 @@ def add_movie(payload):
 
 @app.route('/movies/<id>', methods=['PATCH'])
 @requires_auth('patch:movie')
-def update_movie(payload, movie_id):
+def update_movie(payload, id):
   body = request.get_json()
-  movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+  movie = Movie.query.filter(Movie.id == id).one_or_none()
 
   if body == None:
       abort(404)
@@ -211,10 +211,10 @@ def update_movie(payload, movie_id):
 
 
 
-@app.route("/movies/<int:movie_id>", methods=['DELETE'])
+@app.route("/movies/<int:id>", methods=['DELETE'])
 @requires_auth('delete:movie')
-def delete_movie(payload, movie_id):
-    movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+def delete_movie(payload, id):
+    movie = Movie.query.filter(Movie.id == id).one_or_none()
     if movie == None:
         abort(404)
 
@@ -222,7 +222,7 @@ def delete_movie(payload, movie_id):
         movie.delete()
         return jsonify({
             'success': True,
-            'deleted': movie_id
+            'deleted': id
         })
     except AuthError:
         abort(422)
