@@ -77,7 +77,7 @@ def add_actor(payload):
 @requires_auth('patch:actor')
 def update_actor(payload, actor_id):
     body = request.get_json()
-    actor = Actor.query.get(actor_id)
+    actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
 
     if body == None :
         abort(404)
@@ -183,7 +183,7 @@ def add_movie(payload):
 @requires_auth('patch:movie')
 def update_movie(payload, movie_id):
   body = request.get_json()
-  movie = Movie.query.get(movie_id)
+  movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
 
   if body == None:
       abort(404)
