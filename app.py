@@ -158,11 +158,11 @@ def add_movie(payload):
 
     try:
         title = body['title']
-        release_date = body['release_date']
+        releaseDate = body['releaseDate']
 
         new_movie = Movie(
             title=title,
-            releaseDate=release_date
+            releaseDate=releaseDate
         )
 
         new_movie.insert()
@@ -190,8 +190,8 @@ def update_movie(payload, movie_id):
     if 'title' in body:
       movie.title = body['title']
 
-    if 'release_date' in body:
-      movie.release_date = body['release_date']
+    if 'releaseDate' in body:
+      movie.releaseDate = body['releaseDate']
 
     movie.update()
 
