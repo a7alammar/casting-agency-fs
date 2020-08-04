@@ -13,7 +13,7 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://elmkxyrhjfiogr:018194cfd15fdd474fce84d91a07a15db05254cd76ba8bdc17a7766dc731ee55@ec2-52-204-20-42.compute-1.amazonaws.com:5432/dakpatbu6l4rsu'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
