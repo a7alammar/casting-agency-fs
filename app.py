@@ -79,7 +79,9 @@ def update_actor(payload, actor_id):
     body = request.get_json()
     actor = Actor.query.get(actor_id)
 
-    if body == None or actor == None:
+    if body == None :
+        abort(404)
+    if actor == None:
         abort(404)
 
     try:
@@ -183,7 +185,9 @@ def update_movie(payload, movie_id):
   body = request.get_json()
   movie = Movie.query.get(movie_id)
 
-  if body == None or movie == None:
+  if body == None:
+      abort(404)
+  if movie == None:
       abort(404)
 
   try:
