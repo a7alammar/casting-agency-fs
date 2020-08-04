@@ -1,7 +1,6 @@
 import os
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
-import json
 
 database_name = "casting_agency"
 database_path = "postgres://{}/{}".format('localhost:5432', database_name)
@@ -13,7 +12,7 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://elmkxyrhjfiogr:018194cfd15fdd474fce84d91a07a15db05254cd76ba8bdc17a7766dc731ee55@ec2-52-204-20-42.compute-1.amazonaws.com:5432/dakpatbu6l4rsu'
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URI')
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)

@@ -1,3 +1,4 @@
+import os
 import datetime
 import unittest
 import json
@@ -15,17 +16,12 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.database_path = "postgres://{}/{}".format('localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
-        self.casting_assistant_header = {
-            'authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZwNFAzemRMWTJYUUFDNTlNNW9UTSJ9.eyJpc3MiOiJodHRwczovL2Rldi1meS0wdDB2Zi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDk1Mjg3OTczNDk5MjkwMjM5MjYiLCJhdWQiOlsiYWdlbmN5IiwiaHR0cHM6Ly9kZXYtZnktMHQwdmYudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU5NjAyODk2MSwiZXhwIjoxNTk2MDM2MTYxLCJhenAiOiIwMXM3NlhORW9vRFpQNmh0aEdWYVlTVUhidUJXdFAydSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyJdfQ.TWwhlVQx--riRocjiqkXQvHkXsVawV3heb6aaZz_3LELgsmSSXqniroalV6z-yX3joDSwpcZ_xgBDiVm_sahVB3a-hL8QQm5RyDshYMf1ExKAboSsO5zv_4QE1jD5fkNbAnIWbXEEI-BrpIC40P3KvNTwHk-wfDr2eeHSe3FkiWaFtNW5ZEKlzAqC1hAPxWCYAGmnvGSIKJVXhci5FmmbRthNxB7NyvR-_CbB9sxX7VkSmvf2ZT-1V-KJ7fcmzlkzd66g3qd5CO1XZBvk_e4dZgXAfJii1FVDRu8wwOY3gApp9LlhMmQ-DIUe2VjF03DsCJAHOqN_W9jZM0BdrlexQ'
-        }
+        self.casting_assistant_header = os.environ.get('CASTING_ASSISTANT_HEADER')
 
-        self.casting_director_header = {
-            'authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZwNFAzemRMWTJYUUFDNTlNNW9UTSJ9.eyJpc3MiOiJodHRwczovL2Rldi1meS0wdDB2Zi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTQ3Nzc1Mjc3NjYyMzI2MzE3MTQiLCJhdWQiOlsiYWdlbmN5IiwiaHR0cHM6Ly9kZXYtZnktMHQwdmYudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU5NjAyODczNCwiZXhwIjoxNTk2MDM1OTM0LCJhenAiOiIwMXM3NlhORW9vRFpQNmh0aEdWYVlTVUhidUJXdFAydSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvciIsInBhdGNoOm1vdmllIiwicG9zdDphY3RvciJdfQ.F764m4EpmeYMyeDmJBJOZAYto916st6gMygNHPvo6Vigz1ggiWf3SizQoNe9SrJT-N7ttqhpOaTvafkWP7--T7ZdwwiXmSow7i077w6YpCAtB-eQI-D29aymss9WZiEsmYRxrvUSPVsVYYQLVhayvEGC3_Hh4z92n9eB6IwWpQLECC_192WuJWqBDdJcMaMAPhHEf01-WTxo4J41yZrATK-DSG4m1a1ja9y-clUSyF88RiaHueFRQMoEcXAFdUjLCsps4VNWoMhH-hyRz7eFFLLKEPKoNuYqL2A5VgZ4-ODb8Fd_bVjYbxFb9040cvlhRChdhBWkzkZrsJWM8NarPA'
-        }
+        self.casting_director_header = os.environ.get('CASTING_DIRECTOR_HEADER')
 
-        self.executive_producer_header = {
-            'authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZwNFAzemRMWTJYUUFDNTlNNW9UTSJ9.eyJpc3MiOiJodHRwczovL2Rldi1meS0wdDB2Zi51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDk0MDQyODAzMjY4MTkzOTE1NTMiLCJhdWQiOlsiYWdlbmN5IiwiaHR0cHM6Ly9kZXYtZnktMHQwdmYudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTU5NjAyODY0OCwiZXhwIjoxNTk2MDM1ODQ4LCJhenAiOiIwMXM3NlhORW9vRFpQNmh0aEdWYVlTVUhidUJXdFAydSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvciIsInBhdGNoOm1vdmllIiwicG9zdDphY3RvciIsInBvc3Q6bW92aWUiXX0.ucqQQDsuL3Nj2G5MaYmh1t1LixxsDw49whT0vixqm-wj8T87GP5u0YEF5L5FMLzjQjPhyb79aHoin2uM6dqs55RfZBHuqurLxm6tdT5yLmoWYRrpi5gGE_AcslPb83ZwnmwQTwZEUUIbTDRSfQ2s8egokGO4Sb6zAxrI0L6mFxl3U6E9665pa7UDTjoW1M_WGIisuaClQiSjQ0fkQ2yDhj6n7Dqpx5urUkc5Ns-R_VHkhagcYuDA2MpfTR7xptmaodQsCsiN-fFw9J4X8nlHAiOGtcRKXjYWwFF9t8DJViMoQACyjDQrIoY1MXjmXJC4rRMr_L_RuuDupwkE3EveDg'
-        }
+        self.executive_producer_header = os.environ.get('EXECUTIVE_PRODUCER_HEADER')
+
 
     def tearDown(self):
         """Executed after reach test"""
