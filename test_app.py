@@ -27,7 +27,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         pass
 
     def test_get_actors(self):
-        res = self.client().get('/actors', headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().get('/actors', headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['total_actors'])
@@ -35,7 +35,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
 
     def test_no_actors(self):
-        res = self.client().get('/actors', headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().get('/actors', headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 404)
@@ -47,7 +47,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             'age': '40',
             'gender': 'Male'
         }
-        res = self.client().post('/actors', json=actor, headers={"Authorization": 'bearer '+ self.token_director})
+        res = self.client().post('/actors', json=actor, headers={"Authorization": 'Bearer '+ self.token_director})
         data = json.loads(res.data)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['actor'], actor)
@@ -61,7 +61,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             'age': '30',
             'gender': 'Female'
         }
-        res = self.client().post('/actors', json=actor, headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().post('/actors', json=actor, headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 401)
@@ -69,7 +69,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
 
     def test_update_actor(self):
-        res = self.client().patch('/actors/1', json={'age': '50'}, headers={"Authorization": 'bearer '+ self.token_director})
+        res = self.client().patch('/actors/1', json={'age': '50'}, headers={"Authorization": 'Bearer '+ self.token_director})
         data = json.loads(res.data)
         actor = Actor.query.get(1)
         self.assertEqual(data['success'], True)
@@ -79,20 +79,20 @@ class CastingAgencyTestCase(unittest.TestCase):
 
 
     def test_update_actor_fail(self):
-        res = self.client().patch('/actors/1', json={'age': '55'}, headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().patch('/actors/1', json={'age': '55'}, headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 401)
 
     def test_delete_actor(self):
-        res = self.client().delete('/actors/1', headers={"Authorization": 'bearer '+ self.token_director})
+        res = self.client().delete('/actors/1', headers={"Authorization": 'Bearer '+ self.token_director})
         data = json.loads(res.data)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['deleted'], 1)
         self.assertEqual(res.status_code, 200)
 
     def test_delete_actor_fail(self):
-        res = self.client().delete('/actors/1', headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().delete('/actors/1', headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 401)
@@ -104,7 +104,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     '''
 
     def test_get_movies(self):
-        res = self.client().get('/movies', headers={"Authorization": 'bearer ' + self.token_assistant})
+        res = self.client().get('/movies', headers={"Authorization": 'Bearer ' + self.token_assistant})
         data = json.loads(res.data)
         movies = Movie.query.all()
         self.assertEqual(data['success'], True)
@@ -113,7 +113,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
 
     def test_no_movies(self):
-        res = self.client().get('/movies', headers={"Authorization": 'bearer ' + self.token_assistant})
+        res = self.client().get('/movies', headers={"Authorization": 'Bearer ' + self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 404)
@@ -124,7 +124,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             'title': 'Movie Title',
             'releaseDate': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
-        res = self.client().post('/movies', json=movie, headers={"Authorization": 'bearer '+ self.token_producer})
+        res = self.client().post('/movies', json=movie, headers={"Authorization": 'Bearer '+ self.token_producer})
         data = json.loads(res.data)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['movie'], movie)
@@ -136,14 +136,14 @@ class CastingAgencyTestCase(unittest.TestCase):
             'title': 'The Movie Title',
             'releaseDate': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
-        res = self.client().post('/movies', json=movie, headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().post('/movies', json=movie, headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 401)
 
 
     def test_update_movie(self):
-        res = self.client().patch('/movies/1', json={'title': 'New Title'}, headers={"Authorization": 'bearer '+ self.token_producer})
+        res = self.client().patch('/movies/1', json={'title': 'New Title'}, headers={"Authorization": 'Bearer '+ self.token_producer})
         data = json.loads(res.data)
         movie = Actor.query.get(1)
         self.assertEqual(data['success'], True)
@@ -152,20 +152,20 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
 
     def test_update_movie_fail(self):
-        res = self.client().patch('/movies/1', json={'title': 'New Movie Title'}, headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().patch('/movies/1', json={'title': 'New Movie Title'}, headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 401)
 
     def test_delete_movie(self):
-        res = self.client().delete('/movies/1', headers={"Authorization": 'bearer '+ self.token_producer})
+        res = self.client().delete('/movies/1', headers={"Authorization": 'Bearer '+ self.token_producer})
         data = json.loads(res.data)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['deleted'], 1)
         self.assertEqual(res.status_code, 200)
 
     def test_delete_movie_fail(self):
-        res = self.client().delete('/movies/1', headers={"Authorization": 'bearer '+ self.token_assistant})
+        res = self.client().delete('/movies/1', headers={"Authorization": 'Bearer '+ self.token_assistant})
         data = json.loads(res.data)
         self.assertEqual(data['success'], False)
         self.assertEqual(res.status_code, 401)
