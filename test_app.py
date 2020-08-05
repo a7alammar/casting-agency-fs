@@ -16,9 +16,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.database_path = "postgres://{}/{}".format('localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
-        self.token_assistant = os.environ['CASTING_ASSISTANT_HEADER']
-        self.token_director = os.environ['CASTING_DIRECTOR_HEADER']
-        self.token_producer = os.environ['EXECUTIVE_PRODUCER_HEADER']
+        self.token_assistant = os.environ.get('CASTING_ASSISTANT_HEADER')
+        self.token_director = os.environ.get('CASTING_DIRECTOR_HEADER')
+        self.token_producer = os.environ.get('EXECUTIVE_PRODUCER_HEADER')
 
 
 
